@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+        <script src="pai-scroll.js"></script>
+        <style>
+            body {
+                margin: 0;
+            }
+            .space {
+                width: 100%;
+                display: block;
+                background-color: red;
+                height: 300px;
+                margin-bottom: 15px;
+            }
+            .wrapper {
+                width: 1070px;
+                display: block;
+                margin: auto;
+            }
+            .item-box {
+                display: inline-block;
+                width: calc(25% - 10px);
+                margin-left: 5px;
+                margin-right: 5px;
+                margin-bottom: 10px;
+            }
+            .item-box img {
+                width: 100%;
+            }
+            /*If u want element u should use this.
+            .scroll-element{
+                max-height: 400px;
+                overflow-y: auto;
+            }*/
+        </style>
+        <script>
+            function getRandomString(length) {
+                var randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                var result = '';
+                for ( var i = 0; i < length; i++ ) {
+                    result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
+                }
+                return result;
+            }
+            $(document).ready(() => {
+                function loadMore(page) {
+                    return $.get('https://jsonplaceholder.typicode.com/users', (response) => {
+                       $.each(response, (index, value) => {
+                           $('.scroll-element').append(`<div class="item-box"><img src="https://picsum.photos/200/125?q=` + getRandomString(page + index + 2) + `"></div>`)
+                       });
+                    });
+                }
+                $(window).paiScroll({
+                    load: loadMore,
+                    bottom: 50,
+                    delay: 500
+                });
+            })
+        </script>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="space"></div>
+            <div class="scroll-element"></div>
+        </div>
+    </body>
+</html>
