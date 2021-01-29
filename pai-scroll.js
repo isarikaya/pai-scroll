@@ -34,11 +34,10 @@ jQuery.fn.extend({
            const scrollTop = isWindow ? $(window).scrollTop() : $(this).scrollTop();
 
            const bottom = docHeight - winInHeight <= scrollTop + config.bottom;
-           if (bottom && thanMore) {
+           if ((bottom && thanMore) || config.page === 1) {
                thanMore = false;
                more();
            }
        });
-       $elm.scroll();
    } 
 });
