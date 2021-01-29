@@ -39,5 +39,6 @@ jQuery.fn.extend({
                more();
            }
        });
+       $elm.scroll();
    } 
 });
