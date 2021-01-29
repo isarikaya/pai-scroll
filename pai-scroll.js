@@ -18,12 +18,28 @@ jQuery.fn.extend({
 
        const more = () => {
            if (config.loader) { (isWindow ? $body : $elm).append('<div class="' + config.loaderClass + '">'); }
-           config.load(config.page).done(() => {
+           config.load(config.page).done((response) => {
+               let source = [];
+               if (config.properties && config.properties.length > 0) {
+                   let nested = response;
+                   config.properties.forEach((property, index) => {
+                       if (index == config.properties.length - 1) {
+                           source = nested;
+                       } else {
+                           nested = nested[property];
+                       }
+                   });
+                   source = nested;
+               }
+               else { source = response; }
+
                config.page++;
                setTimeout(() => {
-                   thanMore = true;
                    $('.' + config.loaderClass).remove();
-                   $elm.scroll();
+                   if (source.length > 0) {
+                       thanMore = true;
+                       $elm.scroll();
+                   }
                }, config.delay);
            });
        }
