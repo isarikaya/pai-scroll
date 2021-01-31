@@ -44,7 +44,8 @@ jQuery.fn.extend({
            });
        }
 
-       $elm.scroll(function() {
+       $elm.unbind('scroll.pai');
+       $elm.bind('scroll.pai', function() {
            const docHeight = isWindow ? $(document).height() : this.scrollHeight;
            const winInHeight = isWindow ? window.innerHeight : $(this).height();
            const scrollTop = isWindow ? $(window).scrollTop() : $(this).scrollTop();
@@ -55,6 +56,6 @@ jQuery.fn.extend({
                more();
            }
        });
-       $elm.scroll();
+       $elm.trigger('scroll');
    } 
 });
